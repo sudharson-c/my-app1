@@ -35,7 +35,7 @@ const PlanWithAi = () => {
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || travelDates;
     setShowDatePicker(Platform.OS === 'ios');
-    setTravelDates(currentDate);
+    setTravelDates(new Date(currentDate));
   };
 
   return (

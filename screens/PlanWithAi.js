@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import TripSuggestions from '../components/TripSuggestions';
+
 
 const PlanWithAi = () => {
   const [destination, setDestination] = useState('');
@@ -16,6 +18,7 @@ const PlanWithAi = () => {
   const [accommodation, setAccommodation] = useState('');
   const [transportation, setTransportation] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [tripPlan, setTripPlan] = useState(null);
 
   const handlePlanTrip = () => {
     console.log({
@@ -27,7 +30,50 @@ const PlanWithAi = () => {
       companions,
       accommodation,
       transportation,
-    });
+    })
+    const responseFromGeminiAI = {
+        "trip_plan": {
+            "title": "Solo Exploration in Madurai",
+            "summary": "Discover the vibrant culture and history of Madurai in a day, with personalized recommendations for a solo traveler.",
+            "days": [
+              {
+                "day_number": 1,
+                "morning": {
+                  "activity_1": "Start your day with a delicious breakfast at Hotel Sri Krishna, known for its authentic South Indian cuisine (approx. INR 200).",
+                  "activity_2": "Embark on a cultural journey to the Meenakshi Amman Temple, a magnificent temple complex renowned for its intricate architecture and vibrant colors (approx. INR 50 entry fee)."
+                },
+                "afternoon": {
+                  "activity_1": "Immerse yourself in the local flavors by having lunch at a traditional South Indian restaurant like 'Murugan Idli Shop' (approx. INR 150).",
+                  "activity_2": "Explore the magnificent Thirumalai Nayakkar Mahal, a grand palace showcasing the architectural prowess of the Nayakkar dynasty (approx. INR 50 entry fee)."
+                },
+                "evening": {
+                  "activity_1": "Experience the magic of the Gandhi Museum, commemorating the life and legacy of Mahatma Gandhi (approx. INR 30 entry fee).",
+                  "activity_2": "Engage with the vibrant energy of Madurai's main market, where you can find unique souvenirs and local handicrafts."
+                },
+                "suggestions": "For a more immersive experience, consider joining a guided walking tour of the city, which will provide insights into the local culture and history. You can also find some exciting local markets and street food options in the city center."
+              },
+              {
+                "day_number": 2,
+                "morning": {
+                  "activity_1": "Embrace the beauty of the Alagar Kovil, a stunning temple overlooking the countryside, and enjoy the sunrise over the horizon. ",
+                  "activity_2": "Take a scenic drive to the Periyar National Park, home to diverse wildlife, including tigers, elephants, and leopards. Enjoy a boat ride on the Periyar Lake, offering breathtaking views of the surrounding nature (approx. INR 300 per person for a boat ride)."
+                },
+                "afternoon": {
+                  "activity_1": "Indulge in a delicious South Indian lunch at a local restaurant near Periyar, relishing the flavors of the region. ",
+                  "activity_2": "Embark on a captivating nature walk through the Periyar National Park, observing the diverse flora and fauna. Engage with local guides for an enriching experience."
+                },
+                "evening": {
+                  "activity_1": "Return to Madurai and enjoy a traditional dinner at a rooftop restaurant with panoramic city views (approx. INR 400). ",
+                  "activity_2": "Catch a vibrant cultural performance at the Meenakshi Amman Temple, experiencing traditional dance and music."
+                },
+                "suggestions": "Consider staying at the 'Hotel Madurai International' (approx. INR 2500-5000 per night) or a similar mid-range hotel for a comfortable stay."
+              }
+            ],
+            "notes": "Having a car rental provides flexibility to explore destinations outside the city center, like the Alagar Kovil or Periyar National Park. Enjoy the scenic drives, and be sure to pack comfortable walking shoes. For a truly authentic experience, try learning a few basic Tamil phrases."
+          }
+      };
+      
+      setTripPlan(responseFromGeminiAI.trip_plan);;
 
     setSuggestions(['Suggestion 1', 'Suggestion 2', 'Suggestion 3']);
   };
@@ -40,6 +86,9 @@ const PlanWithAi = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+        {tripPlan ? (
+        <TripSuggestions tripPlan={tripPlan} />
+      ) : (
       <ScrollView style={styles.scrollView}>
         <Text style={styles.heading}>Plan Your Trip with AI✨</Text>
         
@@ -160,7 +209,7 @@ const PlanWithAi = () => {
             </Text>
           ))}
         </View>
-      </ScrollView>
+      </ScrollView>)}
     </SafeAreaView>
   );
 };

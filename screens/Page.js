@@ -103,5 +103,6 @@ const styles = StyleSheet.create({
   planButtonText: {
     fontSize: 18,
     color: Colors.white,
+    fontWeight:'bold'
   },
 });

@@ -1,55 +1,40 @@
-import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Colors from "../constants/Colors";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Colors from '../constants/Colors';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Listings = ({ listings, category }) => {
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
-    console.log('Update Listing');
     setLoading(true);
-
     setTimeout(() => {
       setLoading(false);
     }, 200);
   }, [category]);
 
-  const filteredListings = category === 'All' ? listings : listings.filter((item) => item.category === category);
+  const filteredListings = category === 'All' ? listings : listings.filter(item => item.category === category);
+
+  const navigateToListingDetails = (id) => {
+    navigation.navigate('ListingDetails', { id });
+  };
 
   const renderItems = ({ item }) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigateToListingDetails(item.id)}>
         <View style={styles.item}>
           <Image source={{ uri: item.image }} style={styles.image} />
           <View style={styles.bookmark}>
-            <Ionicons
-              name="bookmark-outline"
-              size={20}
-              color={Colors.white}
-            />
+            <Ionicons name="bookmark-outline" size={20} color={Colors.white} />
           </View>
           <Text style={styles.itemTxt} numberOfLines={1} ellipsizeMode="tail">
             {item.name}
           </Text>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FontAwesome5
-                name="map-marker-alt"
-                size={18}
-                color={Colors.primaryColor}
-              />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <FontAwesome5 name="map-marker-alt" size={18} color={Colors.primaryColor} />
               <Text style={styles.itemLocationTxt}>{item.location}</Text>
             </View>
             <Text style={styles.itemPriceTxt}>{item.rating}</Text>
@@ -71,8 +56,6 @@ const Listings = ({ listings, category }) => {
   );
 };
 
-export default Listings;
-
 const styles = StyleSheet.create({
   item: {
     backgroundColor: Colors.white,
@@ -88,7 +71,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   bookmark: {
-    position: "absolute",
+    position: 'absolute',
     top: 185,
     right: 30,
     backgroundColor: Colors.primaryColor,
@@ -99,7 +82,7 @@ const styles = StyleSheet.create({
   },
   itemTxt: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     color: Colors.black,
     marginBottom: 10,
   },
@@ -109,7 +92,9 @@ const styles = StyleSheet.create({
   },
   itemPriceTxt: {
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: '600',
     color: Colors.primaryColor,
   },
 });
+
+export default Listings;

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "name": "Meenakshi Amman Temple",
+    "image": "https://admin.southindiatoursandtravels.com/pages/gallery/24742.jpg",
+    "description": "A historic Hindu temple located on the southern bank of the Vaigai River, dedicated to Meenakshi, a form of Parvati, and her consort, Sundareswarar.",
+    "rating": 4.9,
+    "price": "Free",
+    "duration": "2",
+    "location": "Madurai, Tamil Nadu",
+    "category": "Temples"
+  },
+  {
+    "id": "2",
+    "name": "Thirumalai Nayakkar Palace",
+    "image": "https://images.unsplash.com/photo-1558680636-8745bb3a6c7c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A 17th-century palace constructed by King Thirumalai Nayak, showcasing the grandeur of Dravidian and Rajput architectural styles.",
+    "rating": 4.6,
+    "price": "30",
+    "duration": "1",
+    "location": "Madurai, Tamil Nadu",
+    "category": "Palaces"
+  },
+  {
+    "id": "3",
+    "name": "Gandhi Memorial Museum",
+    "image": "https://images.unsplash.com/photo-1579215096675-07fdd3125dd9?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A museum dedicated to Mahatma Gandhi, located in the Tamukkam Palace, showcasing artifacts and exhibits related to his life and India's independence struggle.",
+    "rating": 4.7,
+    "price": "10",
+    "duration": "1",
+    "location": "Madurai, Tamil Nadu",
+    "category": "Museums"
+  },
+  {
+    "id": "4",
+    "name": "Koodal Azhagar Temple",
+    "image": "https://admin.southindiatoursandtravels.com/pages/gallery/24742.jpg",
+    "description": "A revered Hindu temple dedicated to Lord Vishnu, known for its intricate architecture and religious significance.",
+    "rating": 4.5,
+    "price": "Free",
+    "duration": "1",
+    "location": "Madurai, Tamil Nadu",
+    "category": "Temples"
+  },
+  {
+    "id": "5",
+    "name": "Vaigai Dam",
+    "image": "https://images.unsplash.com/photo-1584917052950-9a349dfbff8d?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A scenic dam across the Vaigai River, offering beautiful views and a peaceful environment.",
+    "rating": 4.3,
+    "price": "Free",
+    "duration": "2",
+    "location": "Madurai, Tamil Nadu",
+    "category": "Nature"
+  }
+]

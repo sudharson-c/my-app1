@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
+import RNPickerSelect from 'react-native-picker-select';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const PlanWithAi = () => {
   const [destination, setDestination] = useState('');
-  const [travelDates, setTravelDates] = useState('');
-  const [duration, setDuration] = useState('');
+  const [travelDates, setTravelDates] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [durationInDays, setDurationInDays] = useState('');
   const [budget, setBudget] = useState('');
   const [interests, setInterests] = useState('');
   const [companions, setCompanions] = useState('');
@@ -15,13 +18,10 @@ const PlanWithAi = () => {
   const [suggestions, setSuggestions] = useState([]);
 
   const handlePlanTrip = () => {
-    // Here you would implement the logic to interact with your AI service
-    // and update the suggestions state with the results.
-    // For now, let's just log the input data.
     console.log({
       destination,
       travelDates,
-      duration,
+      durationInDays,
       budget,
       interests,
       companions,
@@ -29,8 +29,13 @@ const PlanWithAi = () => {
       transportation,
     });
 
-    // Placeholder for AI suggestions
     setSuggestions(['Suggestion 1', 'Suggestion 2', 'Suggestion 3']);
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || travelDates;
+    setShowDatePicker(Platform.OS === 'ios');
+    setTravelDates(currentDate);
   };
 
   return (
@@ -50,21 +55,27 @@ const PlanWithAi = () => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Travel Dates</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your travel dates"
-            value={travelDates}
-            onChangeText={setTravelDates}
-          />
+          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateInput}>
+            <Text style={styles.dateText}>{travelDates.toDateString()}</Text>
+          </TouchableOpacity>
+          {showDatePicker && (
+            <DateTimePicker
+              value={travelDates}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+            />
+          )}
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Duration</Text>
+          <Text style={styles.label}>Duration in Days</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter the duration of your trip"
-            value={duration}
-            onChangeText={setDuration}
+            value={durationInDays}
+            onChangeText={setDurationInDays}
+            keyboardType='numeric'
           />
         </View>
 
@@ -75,6 +86,7 @@ const PlanWithAi = () => {
             placeholder="Enter your budget"
             value={budget}
             onChangeText={setBudget}
+            keyboardType='numeric'
           />
         </View>
 
@@ -85,36 +97,55 @@ const PlanWithAi = () => {
             placeholder="Enter your interests (e.g., sightseeing, hiking)"
             value={interests}
             onChangeText={setInterests}
+            
           />
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Travel Companions</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Number of companions"
+          <RNPickerSelect
+            onValueChange={(value) => setCompanions(value)}
+            items={[
+              { label: 'Solo', value: 'Solo' },
+              { label: 'Couple', value: 'Couple' },
+              { label: 'Family', value: 'Family' },
+              { label: 'Group', value: 'Group' },
+            ]}
+            style={pickerSelectStyles}
             value={companions}
-            onChangeText={setCompanions}
+            placeholder={{ label: 'Select number of companions', value: null }}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Accommodation Preferences</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your accommodation preferences"
+          <RNPickerSelect
+            onValueChange={(value) => setAccommodation(value)}
+            items={[
+              { label: 'Hotel', value: 'Hotel' },
+              { label: 'Hostel', value: 'Hostel' },
+              { label: 'Airbnb', value: 'Airbnb' },
+              { label: 'Guest House', value: 'Guest House' },
+            ]}
+            style={pickerSelectStyles}
             value={accommodation}
-            onChangeText={setAccommodation}
+            placeholder={{ label: 'Select accommodation preference', value: null }}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Transportation Preferences</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your transportation preferences"
+          <RNPickerSelect
+            onValueChange={(value) => setTransportation(value)}
+            items={[
+              { label: 'Car Rental', value: 'Car Rental' },
+              { label: 'Public Transport', value: 'Public Transport' },
+              { label: 'Walking', value: 'Walking' },
+              { label: 'Biking', value: 'Biking' },
+            ]}
+            style={pickerSelectStyles}
             value={transportation}
-            onChangeText={setTransportation}
+            placeholder={{ label: 'Select transportation preference', value: null }}
           />
         </View>
 
@@ -166,6 +197,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
+  dateInput: {
+    backgroundColor: Colors.white,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    justifyContent: 'center',
+  },
+  dateText: {
+    fontSize: 16,
+  },
   button: {
     backgroundColor: Colors.primaryColor,
     padding: 15,
@@ -185,5 +227,22 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    backgroundColor: Colors.white,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  inputAndroid: {
+    backgroundColor: Colors.white,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
 });

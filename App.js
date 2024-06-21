@@ -25,7 +25,7 @@ export default function App() {
           <Stack.Screen
             name="ChatBot"
             component={ChatBot}
-            options={{ title: "ChatBot" }}
+            options={{ title: "PayaniChatBot" }}
           />
           <Stack.Screen
             name="PlanWithAi"

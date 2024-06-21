@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TripSuggestions from '../components/TripSuggestions';
-import planWithAi from '../config/geminiAi';
+import { planWithAi } from '../config/geminiAi';
 
 const PlanWithAi = () => {
   const [destination, setDestination] = useState('');

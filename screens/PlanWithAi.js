@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TripSuggestions from '../components/TripSuggestions';
-import run from '../config/geminiAi'; // Adjust the path as needed
+import planWithAi from '../config/geminiAi';
 
 const PlanWithAi = () => {
   const [destination, setDestination] = useState('');
@@ -33,7 +33,7 @@ const PlanWithAi = () => {
     };
     
     try {
-      const trip_plan = await run(user_data);
+      const trip_plan = await planWithAi(user_data);
       setTripPlan(JSON.parse(trip_plan));
     } catch (error) {
       console.error('Error fetching trip plan:', error);

@@ -83,7 +83,7 @@ const ListingDetails = () => {
             </View>
             <TouchableOpacity
           style={styles.planButton}
-          onPress={() => navigation.navigate('AiGuide')}
+          onPress={() => navigation.navigate('AiGuide',{location:listing.name})}
         >
           <Text style={styles.planButtonText}>Get AI✨ guide</Text>
         </TouchableOpacity>

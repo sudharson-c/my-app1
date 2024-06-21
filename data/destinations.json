@@ -102,5 +102,30 @@
     "category": "Historical Sites",
     "latitude": "9.93326",
     "longitude": "78.047333"
+  },
+  {
+    "id": "9",
+    "name": "Kutladampatti Falls",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/87/11/55/kutladampatti-falls.jpg?w=1200&h=-1&s=1",
+    "description": "A cascading waterfall surrounded by lush greenery, offering a refreshing escape and scenic beauty. Ideal for a short trek and a dip in the cool waters (during monsoon season).",
+    "rating": 4.3,
+    "price": "Free",
+    "duration": "1-2 hours",
+    "location": "Kutladampatti village",
+    "category": "Nature",
+    "latitude": "10.092850",
+    "longitude": "77.996780"
+  },{
+    "id": "10",
+    "name": "Sirumalai Reserved Forest",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/04/62/d1/sirumalai-reserved-forest.jpg?w=1200&h=1200&s=1",
+    "description": "A sprawling ecological treasure trove encompassing over 60,000 acres, Sirumalai Reserved Forest boasts a diverse landscape of dry deciduous and moist evergreen forests.  This scenic mountain range offers a cool climate, breathtaking views, and a rich tapestry of flora and fauna.",
+    "rating": 4.5,
+    "price": "Rs 900 per adult",
+    "duration": "Varies (depending on activities)",
+    "location": "Sirumalai, Dindigul district, Tamil Nadu",
+    "category": "Nature & Hiking",
+    "latitude": "10.1942531",
+    "longitude": "77.9966953"
   }
 ]

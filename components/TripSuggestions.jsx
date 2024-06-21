@@ -1,10 +1,20 @@
-// TripSuggestions.js
-
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
 
 const TripSuggestions = ({ tripPlan }) => {
+  // Check if tripPlan or tripPlan.days is not an array
+  if (!tripPlan || !Array.isArray(tripPlan.days)) {
+    return (
+      <ScrollView style={styles.container}>
+        <Text style={styles.heading}>Trip Suggestions Unavailable</Text>
+        <Text style={styles.errorText}>
+          Unable to fetch trip suggestions. Please try again later.
+        </Text>
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.heading}>{tripPlan.title}</Text>
@@ -18,26 +28,26 @@ const TripSuggestions = ({ tripPlan }) => {
           <View style={styles.activityContainer}>
             <Text style={styles.activityHeading}>Morning</Text>
             <Text>{day.morning.activity_1}</Text>
-            <Text>{day.morning.activity_2}</Text>
+            {day.morning.activity_2 && <Text>{day.morning.activity_2}</Text>}
           </View>
           
           <View style={styles.activityContainer}>
             <Text style={styles.activityHeading}>Afternoon</Text>
             <Text>{day.afternoon.activity_1}</Text>
-            <Text>{day.afternoon.activity_2}</Text>
+            {day.afternoon.activity_2 && <Text>{day.afternoon.activity_2}</Text>}
           </View>
           
           <View style={styles.activityContainer}>
             <Text style={styles.activityHeading}>Evening</Text>
             <Text>{day.evening.activity_1}</Text>
-            <Text>{day.evening.activity_2}</Text>
+            {day.evening.activity_2 && <Text>{day.evening.activity_2}</Text>}
           </View>
           
-          <Text style={styles.suggestions}>{day.suggestions}</Text>
+          {day.suggestions && <Text style={styles.suggestions}>{day.suggestions}</Text>}
         </View>
       ))}
       
-      <Text style={styles.notes}>{tripPlan.notes}</Text>
+      {tripPlan.notes && <Text style={styles.notes}>{tripPlan.notes}</Text>}
     </ScrollView>
   );
 };
@@ -80,6 +90,12 @@ const styles = StyleSheet.create({
   },
   notes: {
     fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    marginTop: 20,
+    textAlign: 'center',
+    color: 'red',
   },
 });
 

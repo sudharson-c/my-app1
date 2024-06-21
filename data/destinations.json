@@ -89,5 +89,18 @@
     "category": "Temples",
     "latitude": "9.57369",
     "longitude": "78.122556"
+  },
+  {
+    "id": "8",
+    "name": "Samanar Hills",
+    "image": "https://lakshmisharath.com/wp-content/uploads/2021/01/Madurai-Samanar-Hills-carvings-1024x768.jpg",
+    "description": "A rocky stretch of hills known for its Jain and Hindu monuments dating back between the 2nd century BCE and 12th century CE. Features sculptures, cave paintings, and stunning natural beauty.",
+    "rating": 4.7,
+    "price": "Free",
+    "duration": "2-3 hours",
+    "location": "Keezhakuyilkudi village",
+    "category": "Historical Sites",
+    "latitude": "9.93326",
+    "longitude": "78.047333"
   }
 ]

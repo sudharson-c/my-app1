@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
       marginLeft: 5,
     },
     highlightWrapper: {
+        position:'relative',
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 10,
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       lineHeight: 24,
       marginBottom: 20,
+      position:'relative',
     },
     backButton: {
       position: 'absolute',

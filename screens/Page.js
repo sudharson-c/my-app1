@@ -55,6 +55,13 @@ const Page = () => {
           <Text style={styles.planButtonText}>Plan Your Trip with AI✨</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.planButton}
+          onPress={() => navigation.navigate('ChatBot')}
+        >
+          <Text style={styles.planButtonText}>ChatBot</Text>
+        </TouchableOpacity>
+
         <Listings listings={listingData} category={category} />
 
         <GroupListings listings={groupData} />

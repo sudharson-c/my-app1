@@ -43,4 +43,4 @@ async function run(userMessage) {
   }
 }
 
-module.exports = run;
+export default run;

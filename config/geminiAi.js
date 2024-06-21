@@ -56,51 +56,46 @@ const {
   async function guideAi(location) {
     const prompt = `Write a comprehensive guide for tourists visiting the place mentioned below:\n\nLocation: ${location}\n\nGuide {\n  title: "Comprehensive Guide to ${location}";\n  introduction: "Introduction to ${location}";\n  architecture: "Information about architecture in ${location}";\n  history: "Historical overview of ${location}";\n  festivals: ["Festival 1", "Festival 2", "Festival 3"];\n  conclusion: "Conclusion about ${location}";\n  nearbyAttractions: "Nearby attractions around ${location}";\n  practicalInformation: {\n    dressCode: "Dress code for visiting ${location}";\n    entryFee: "Entry fee details for ${location}";\n    gettingThere: "Directions to ${location}";\n    location: "Location details of ${location}";\n    photography: "Photography rules at ${location}";\n    timings: "Visiting timings for ${location}";\n    tips: ["Tip 1", "Tip 2", "Tip 3"];\n  };\n}`;
   
-    const chatSession = model.startChat({
-      generationConfig,
-      history: [
-        {
-          role: "user",
-          parts: [{ text: prompt }],
-        },
-      ],
-    });
-  
     try {
+      const chatSession = model.startChat({
+        generationConfig,
+        history: [
+          {
+            role: "user",
+            parts: [{ text: prompt }],
+          },
+        ],
+      });
+  
       const result = await chatSession.sendMessage("");
       const responseText = result.response.text();
+      console.log(responseText)
   
-      console.log("Raw response text:", responseText);
+    //   const structuredGuide = {
+    //     title: `Comprehensive Guide to ${location}`,
+    //     introduction: guideData.responses[0]?.text || "",
+    //     architecture: guideData.responses[1]?.text || "",
+    //     history: guideData.responses[2]?.text || "",
+    //     festivals: guideData.responses[3]?.choices.map((choice) => choice.text) || [],
+    //     conclusion: guideData.responses[4]?.text || "",
+    //     nearbyAttractions: guideData.responses[5]?.text || "",
+    //     practicalInformation: {
+    //       dressCode: guideData.responses[6]?.text || "",
+    //       entryFee: guideData.responses[7]?.text || "",
+    //       gettingThere: guideData.responses[8]?.text || "",
+    //       location: guideData.responses[9]?.text || "",
+    //       photography: guideData.responses[10]?.text || "",
+    //       timings: guideData.responses[11]?.text || "",
+    //       tips: guideData.responses[12]?.choices.map((choice) => choice.text) || [],
+    //     },
+    //   };
   
-      const guideData = JSON.parse(responseText);
-  
-      const structuredGuide = {
-        title: `Comprehensive Guide to ${location}`,
-        introduction: guideData.responses[0]?.text || "",
-        architecture: guideData.responses[1]?.text || "",
-        history: guideData.responses[2]?.text || "",
-        festivals: guideData.responses[3]?.choices.map((choice) => choice.text) || [],
-        conclusion: guideData.responses[4]?.text || "",
-        nearbyAttractions: guideData.responses[5]?.text || "",
-        practicalInformation: {
-          dressCode: guideData.responses[6]?.text || "",
-          entryFee: guideData.responses[7]?.text || "",
-          gettingThere: guideData.responses[8]?.text || "",
-          location: guideData.responses[9]?.text || "",
-          photography: guideData.responses[10]?.text || "",
-          timings: guideData.responses[11]?.text || "",
-          tips: guideData.responses[12]?.choices.map((choice) => choice.text) || [],
-        },
-      };
-  
-      console.log("Structured guide:", structuredGuide);
-      return structuredGuide;
+    //   console.log("Structured guide:", structuredGuide);
+      return responseText;
     } catch (error) {
       console.error("Error fetching guide:", error);
       throw new Error("Failed to fetch guide from AI");
     }
-  }
-  
-  
+  }  
   
 export  {planWithAi,guideAi};

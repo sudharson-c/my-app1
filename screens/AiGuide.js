@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator,ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 import { guideAi } from "../config/geminiAi";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const AiGuide = () => {
   const route = useRoute();
@@ -16,7 +17,7 @@ const AiGuide = () => {
     const fetchGuide = async () => {
       try {
         const response = await guideAi(location);
-        setGuide(response);
+        setGuide(JSON.parse(response));
         setLoading(false);
       } catch (error) {
         console.error("Error fetching guide:", error);
@@ -45,7 +46,8 @@ const AiGuide = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
       <Text style={styles.title}>{guide.title}</Text>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Introduction</Text>
@@ -104,9 +106,11 @@ const AiGuide = () => {
           ))}
         </View>
       </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Page from './screens/Page';
+import ChatBot from './screens/ChatBot';
 import PlanWithAi from './screens/PlanWithAi';
 import Listings from './components/Listings'; // Import Listings screen
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -20,6 +21,11 @@ export default function App() {
             name="Page"
             component={Page}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ChatBot"
+            component={ChatBot}
+            options={{ title: "ChatBot" }}
           />
           <Stack.Screen
             name="PlanWithAi"

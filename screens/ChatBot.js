@@ -37,7 +37,7 @@ const ChatBot = () => {
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
       >
-        <Text style={styles.heading}>ChatBot</Text>
+        <Text style={styles.heading}>PayaniChatBot</Text>
         <View style={styles.chatContainer}>
           {chatHistory.map((chat, index) => (
             <Text key={index} style={chat.sender === 'user' ? styles.userMessage : styles.botMessage}>

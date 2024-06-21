@@ -55,17 +55,16 @@ const Page = () => {
           <Text style={styles.planButtonText}>Plan Your Trip with AI✨</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.planButton}
-          onPress={() => navigation.navigate('ChatBot')}
-        >
-          <Text style={styles.planButtonText}>ChatBot</Text>
-        </TouchableOpacity>
-
         <Listings listings={listingData} category={category} />
 
         <GroupListings listings={groupData} />
       </ScrollView>
+      <TouchableOpacity
+        style={styles.chatBotButton}
+        onPress={() => navigation.navigate('ChatBot')}
+      >
+        <Ionicons name="chatbubbles" size={28} color={Colors.white} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -110,6 +109,17 @@ const styles = StyleSheet.create({
   planButtonText: {
     fontSize: 18,
     color: Colors.white,
-    fontWeight:'bold'
+    fontWeight: 'bold'
+  },
+  chatBotButton: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    backgroundColor: Colors.primaryColor,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

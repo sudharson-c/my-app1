@@ -55,6 +55,13 @@ const Page = () => {
           <Text style={styles.planButtonText}>Plan Your Trip with AI✨</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.planButton}
+          onPress={() => navigation.navigate('UserRecommendation')}
+        >
+          <Text style={styles.planButtonText}>Recommended place near You🌎</Text>
+        </TouchableOpacity>
+
         <Listings listings={listingData} category={category} />
 
         <GroupListings listings={groupData} />
@@ -107,6 +114,17 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   planButtonText: {
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: 'bold'
+  },
+  recommendButton: {
+    backgroundColor: Colors.lightgreen,
+    padding: 15,
+    borderRadius: 10,
+    margin: 10,
+  },
+  recommendButtonText: {
     fontSize: 18,
     color: Colors.white,
     fontWeight: 'bold'

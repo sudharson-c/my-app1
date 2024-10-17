@@ -1,21 +1,5 @@
-<<<<<<< Updated upstream
-const apiKey = "AIzaSyDP0cvjPxq_9gMHezmGG15dOm55u7-tnhM";
-console.log(apiKey)
-=======
 
-const apiKey = process.env.GEMINI_API_KEY;
->>>>>>> Stashed changes
-const {
-    GoogleGenerativeAI,
-    HarmCategory,
-    HarmBlockThreshold,
-  } = require("@google/generative-ai");
-  
-  const genAI = new GoogleGenerativeAI(apiKey);
-  
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-  });
+const API_URL = "https://llm.gururaja.in"
   
   const generationConfig = {
     temperature: 1,
@@ -24,9 +8,7 @@ const {
     maxOutputTokens: 8192,
     responseMimeType: "application/json",
   };
-  
-  
-  async function planWithAi(user_data) {
+  async function llmPlanWithAi(user_data) {
     const chatSession = model.startChat({
       generationConfig,
       history: [
@@ -51,7 +33,7 @@ const {
   }
   }
 
-  async function guideAi(location) {
+  async function llmGuideAi(location) {
     const prompt = `Write a comprehensive guide for tourists visiting the place mentioned below:\n\nLocation: ${location}\n\nGuide {\n  title: "Comprehensive Guide to ${location}";\n  introduction: "Introduction to ${location}";\n  architecture: "Information about architecture in ${location}";\n  history: "Historical overview of ${location}";\n  festivals: ["Festival 1", "Festival 2", "Festival 3"];\n  conclusion: "Conclusion about ${location}";\n  nearbyAttractions: "Nearby attractions around ${location}";\n  practicalInformation: {\n    dressCode: "Dress code for visiting ${location}";\n    entryFee: "Entry fee details for ${location}";\n    gettingThere: "Directions to ${location}";\n    location: "Location details of ${location}";\n    photography: "Photography rules at ${location}";\n    timings: "Visiting timings for ${location}";\n    tips: ["Tip 1", "Tip 2", "Tip 3"];\n  };\n}`;
   
     try {
@@ -76,4 +58,24 @@ const {
     }
   }  
   
-export  {planWithAi,guideAi};
+export  {llmPlanWithAi,llmGuideAi};
+const axios = require('axios');
+
+const data = {
+  model: "guru-llama",
+  messages: [
+    { role: "system", content: "You are a travel assistant for the Madurai Payani app." },
+    { role: "user", content: "meenakshi amman temple" }
+  ]
+};
+
+
+const request = async ()=>{
+    await axios.post('https://guru-25-llm.hf.space/chat/completions', data, { 
+    headers: { Authorization: `Bearer ${process.env.LLM_KEY}` }
+}).then(response => {
+  console.log(response.data.choices[0].message.content);
+}).catch(error => {
+  console.error('Error:', error);
+});
+}

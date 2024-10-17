@@ -9,6 +9,7 @@ import Listings from './components/Listings'; // Import Listings screen
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ListingDetails from './screens/ListingDetails';
 import AiGuide from './screens/AiGuide';
+import UserRecommendation from './screens/UserRecommendation'
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ export default function App() {
             name="PlanWithAi"
             component={PlanWithAi}
             options={{ title: "Plan Your Trip with AI" }}
+          />
+          <Stack.Screen
+            name="UserRecommendation"
+            component={UserRecommendation}
+            options={{ title: "User Location Based Recommendation" }}
           />
           <Stack.Screen
             name="Listings"

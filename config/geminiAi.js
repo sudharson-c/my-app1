@@ -1,5 +1,5 @@
-
-const apiKey = process.env.API;
+const apiKey = "AIzaSyDP0cvjPxq_9gMHezmGG15dOm55u7-tnhM";
+console.log(apiKey)
 const {
     GoogleGenerativeAI,
     HarmCategory,

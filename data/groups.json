@@ -1,23 +1,178 @@
 [
   {
-    "id": "1",
-    "name": "Sri Murugan Travel Agency",
-    "image": "https://lh5.googleusercontent.com/p/AF1QipNO7i3-LtaS6S-QleIhrRMMsehT7x2BsaZ8P68x",
+    "id": 1,
+    "name": "Perfect Travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipPBatH8awDGme5ldofP4hd9138VZscUE5WJP1Ke=w122-h92-k-no",
+    "rating": 4.7,
+    "reviews": 552,
+    "phone": "+91 98943 73713",
+    "website": "http://www.maduraiperfecttravels.com/"
+  },
+  {
+    "id": 2,
+    "name": "Chandramba Travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipMvDiFaD7puz16icRllX6dubQRX1Lv3ghx-KZqk=w122-h92-k-no",
+    "rating": 4.8,
+    "reviews": 174,
+    "phone": "+91 86101 15844",
+    "website": "https://themaduraitravels.in/"
+  },
+  {
+    "id": 3,
+    "name": "Happy Tour's and travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNSDGIYjsANCoa1uibDeJGdlY-BNs9KcaV54JPE=w122-h92-k-no",
+    "rating": 4.8,
+    "reviews": 795,
+    "phone": "+91 89392 80268",
+    "website": "http://www.happytourstravels.in/"
+  },
+  {
+    "id": 4,
+    "name": "Madurai Siva Travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNV7FQqUaHHz52C2iyOyCvezb_yOWBdAVy_x0Uq=w189-h92-k-no",
+    "rating": 5,
+    "reviews": 158,
+    "phone": "+91 96551 11156",
+    "website": "http://www.sivatravels.com/"
+  },
+  {
+    "id": 5,
+    "name": "Madurai Travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipMpyd2q9jfJCRWZ_vnSSOqpN5uqzb8ARa3BX_lb=w92-h92-k-no",
     "rating": 4.9,
-    "reviews": 1600
+    "reviews": 59,
+    "phone": "+91 98656 96935",
+    "website": "http://www.maduraitravels.in/"
   },
   {
-    "id": "2",
+    "id": 6,
+    "name": "BabaTours&Travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNfpoQ0cvxm-lr5NEth5ShXM7aUKPRgd6p12BL5=w163-h92-k-no",
+    "rating": 4.8,
+    "reviews": 145
+  },
+  {
+    "id": 7,
+    "name": "MADURAI SK TOURS & TRAVELS",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNMmZlkhdTowTvRNb5HMCh7gKR4xMKPrEx7cyIP=w80-h177-k-no",
+    "rating": 5,
+    "reviews": 40,
+    "phone": "+91 98426 82888",
+    "website": "http://www.maduraisktravels.com/"
+  },
+  {
+    "id": 8,
+    "name": "Ramji Madurai Travels Agency",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipN0yiojwBAIKPVZYMgPP7Pa7KRKt5sSfjZwS33I=w122-h92-k-no",
+    "rating": 4.9,
+    "reviews": 210,
+    "phone": "+91 63842 97266",
+    "website": "https://ramjimaduraitravels.in/"
+  },
+  {
+    "id": 9,
+    "name": "GT Holidays Private Limited",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipOZGHdKt8KFrJ-wVJ027loG3_IgXYTTVUSwYnb4=w163-h92-k-no",
+    "rating": 4.8,
+    "reviews": 436,
+    "phone": "+91 99408 82200",
+    "website": "https://www.gtholidays.in/madurai/"
+  },
+  {
+    "id": 10,
+    "name": "Madurai Golden tours & travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNhGJrBHMoDnDcYfU0XcKnVOWhfZLR8Jmg0o_lU=w80-h106-k-no",
+    "rating": 4.9,
+    "reviews": 80,
+    "phone": "+91 94440 13166",
+    "website": "https://maduraigoldentravels.in/"
+  },
+  {
+    "id": 11,
     "name": "Shri Narayana Travel Agency",
-    "image": "https://shrinarayanatravels.com/wp-content/uploads/2019/11/logo-shir-narayana.png",
-    "rating": 4.4,
-    "reviews": 1250
+    "image": "https://lh5.googleusercontent.com/p/AF1QipMohjsALbW1h2xfxQSqwfz8OB6j9AgADyZ2KSe7=w80-h106-k-no",
+    "rating": 4.9,
+    "reviews": 65,
+    "phone": "+91 94430 76181",
+    "website": "https://shrinarayanatravels.com/"
   },
   {
-    "id": "3",
-    "name": "Madurai Sai Tours & Travels",
-    "image":"https://cdn.contactcenterworld.com/images/company/madurai-tours-and-travels-largex5-logo.jpg",
-    "rating": 4.0,
-    "reviews": 66
+    "id": 12,
+    "name": "Sri om sairam tours and travels madurai",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNh4Jm8bnEjma4RYRzAov4fMrWEnuyNPQmfSKk9=w163-h92-k-no",
+    "rating": 4.9,
+    "reviews": 80,
+    "phone": "+91 74025 55923",
+    "website": "https://omsairamtours.com/"
+  },
+  {
+    "id": 13,
+    "name": "Madurai Tourism ®",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipPzZHGTU846r5lG8FDPEBfgFBhE8W5458UeOPNL=w122-h92-k-no",
+    "rating": 4.8,
+    "reviews": 671,
+    "phone": "+91 99446 66899",
+    "website": "https://www.maduraitourism.com/"
+  },
+  {
+    "id": 14,
+    "name": "Vasanthi Travels madurai",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNpZ4L2GI2w3qDhVru5c3bOFiaZop0uEiKFlnwq=w122-h92-k-no",
+    "rating": 4.9,
+    "reviews": 152,
+    "phone": "+91 95248 55544",
+    "website": "http://www.maduraivasanthitravels.com/"
+  },
+  {
+    "id": 15,
+    "name": "MERAJ TRAVELS",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipP7E-sZEK8V8i3eEYus-KOa6HW_j_TTVdV3p95C=w92-h92-k-no",
+    "rating": 4.9,
+    "reviews": 406,
+    "phone": "+91 98430 45786",
+    "website": "http://www.merajtravels.com/"
+  },
+  {
+    "id": 16,
+    "name": "Alwin Travels, Travel Agency madurai, 22+ years in business",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipMN0ks7zqqqlNzTF9TVC334G6cr7GPZjOa5hSND=w122-h92-k-no",
+    "rating": 4.9,
+    "reviews": 40,
+    "phone": "+91 82202 21918",
+    "website": "http://www.alwintravelsmadurai.com/"
+  },
+  {
+    "id": 17,
+    "name": "Madurai vismi Tours and travels",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNIpSuRFarZsYRcuiLlR_-ck2M3n6Rq92mHuNeT=w122-h92-k-no",
+    "rating": 4.7,
+    "reviews": 379,
+    "website": "https://www.maduraivismicabs.com/"
+  },
+  {
+    "id": 18,
+    "name": "MUTHU TOURISM",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipOoMfYVlGU24wTtBpu60LDRCc5pnqk0NVesy5Zs=w122-h92-k-no",
+    "rating": 5,
+    "reviews": 809,
+    "phone": "+91 99423 33532",
+    "website": "http://www.muthutourism.com/"
+  },
+  {
+    "id": 19,
+    "name": "Blessing Tours and Travels, Madurai",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipOJQV_IYvCpQRYUs_DKQIcJIaWxX6m0z9aMqWsb=w80-h164-k-no",
+    "rating": 4.9,
+    "reviews": 54,
+    "phone": "+91 97916 97030"
+  },
+  {
+    "id": 20,
+    "name": "Pandiya Travels in Madurai",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipNPJs2Kj2Y-Sp-2mcjZ7qo-rIhTG0C43r5gI1Ye=w80-h142-k-no",
+    "rating": 4.9,
+    "reviews": 90,
+    "phone": "+91 85310 80977",
+    "website": "https://pandiyatravels.com/"
   }
 ]

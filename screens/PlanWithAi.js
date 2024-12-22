@@ -21,7 +21,7 @@ const PlanWithAi = () => {
   const [tripPlan, setTripPlan] = useState(null);
 
   const handlePlanTrip = async () => {
-    if (destination=='')
+    if (destination=="")
       setDestination("Madurai")
     const user_data = {
       destination,

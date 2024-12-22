@@ -2,6 +2,7 @@ import React from "react";
 import {
   FlatList,
   Image,
+  Linking,
   ListRenderItem,
   StyleSheet,
   Text,
@@ -22,6 +23,8 @@ const GroupListings = ({ listings }) => {
             <Text style={styles.itemRating}>{item.rating}</Text>
             <Text style={styles.itemReviews}>({item.reviews})</Text>
           </View>
+            {item.phone && <Text onPress={()=>Linking.openURL(`tel:${item.phone}`)} style={{color:"blue"}}>{item.phone}</Text>}
+            {item.website && <Text onPress={()=>Linking.openURL(`tel:${item.website}`)} style={{color:"blue"}}>{item.website}</Text>}
         </View>
       </View>
     );

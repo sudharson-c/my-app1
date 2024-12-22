@@ -1,129 +1,146 @@
-import copy
 import numpy as np
+from scipy.spatial.distance import euclidean
 
-class Particle(object):
-    def __init__(self, lower_bound, upper_bound, dimensions, objective_function):
-        self.reset(dimensions, lower_bound, upper_bound, objective_function)
 
-    def reset(self, dimensions, lower_bound, upper_bound, objective_function):
-        position = []
-        for i in range(dimensions):
-            if lower_bound[i] < upper_bound[i]:
-                position.extend(np.random.randint(lower_bound[i], upper_bound[i] + 1, 1, dtype=int))
-            elif lower_bound[i] == upper_bound[i]:
-                position.extend(np.array([lower_bound[i]], dtype=int))
+class Particle:
+    def __init__(self, num_dimensions):
+        self.position = np.random.rand(num_dimensions)
+        self.velocity = np.random.rand(num_dimensions)
+        self.best_position = self.position.copy()
+        self.best_score = float('-inf')
+
+
+class LocationOptimizer:
+    def __init__(self, num_particles, num_iterations, w, c1, c2):
+        self.num_particles = num_particles
+        self.num_iterations = num_iterations
+        self.w = w  # Inertia weight
+        self.c1 = c1  # Cognitive weight
+        self.c2 = c2  # Social weight
+
+    def optimize(self, locations, user_preferences):
+        num_dimensions = len(user_preferences) - 2  # Exclude current lat and lon
+        particles = [Particle(num_dimensions) for _ in range(self.num_particles)]
+        global_best_position = np.random.rand(num_dimensions)
+        global_best_score = float('-inf')
+
+        for _ in range(self.num_iterations):
+            for particle in particles:
+                score = self.fitness_function(particle.position, locations, user_preferences)
+
+                if score > particle.best_score:
+                    particle.best_score = score
+                    particle.best_position = particle.position.copy()
+
+                if score > global_best_score:
+                    global_best_score = score
+                    global_best_position = particle.position.copy()
+
+                # Update velocity and position
+                r1, r2 = np.random.rand(2)
+                particle.velocity = (
+                    self.w * particle.velocity +
+                    self.c1 * r1 * (particle.best_position - particle.position) +
+                    self.c2 * r2 * (global_best_position - particle.position)
+                )
+                particle.position = np.clip(particle.position + particle.velocity, 0, 1)
+
+        return self.get_best_location(global_best_position, locations, user_preferences)
+
+    def fitness_function(self, particle_position, locations, user_preferences):
+        scores = []
+        for location in locations:
+            score = sum(
+                w * self.feature_score(p, l, i, t)
+                for w, p, l, i, t in zip(
+                    particle_position,
+                    user_preferences[2:],  # Exclude current lat and lon
+                    location[3:],  # Exclude name, lat, lon
+                    range(3, len(location)),  # Feature indices
+                    range(len(user_preferences[2:]))  # Feature type indicator
+                )
+            )
+            # Add distance score
+            distance = euclidean(user_preferences[:2], location[1:3])
+            distance_score = 1 / (1 + distance / 1000)  # Normalize distance score
+            score += distance_score
+            scores.append(score)
+        return max(scores)
+
+    def feature_score(self, preference, location_feature, feature_index, feature_type):
+        if feature_type == 0:  # Budget
+            if isinstance(preference, tuple):
+                pref_min, pref_max = preference
+                if isinstance(location_feature, tuple):
+                    loc_min, loc_max = location_feature
+                    overlap = max(0, min(pref_max, loc_max) - max(pref_min, loc_min))
+                    total_range = max(pref_max, loc_max) - min(pref_min, loc_min)
+                    return overlap / total_range if total_range > 0 else 0
+                if pref_min <= location_feature <= pref_max:
+                    return 1
+                return 1 - min(abs(location_feature - pref_min), abs(location_feature - pref_max)) / (pref_max - pref_min)
             else:
-                assert False
+                return 1 - abs(preference - location_feature) / max(preference, location_feature)
 
-        self.position = [position]
-        self.velocity = [np.multiply(np.random.rand(dimensions), (upper_bound - lower_bound)).astype(int)]
-        self.best_position = self.position[:]
-        self.function_value = [objective_function(self.best_position[-1])]
-        self.best_function_value = self.function_value[:]
+        elif feature_type == 1:  # Duration
+            return 1 - abs(preference - location_feature) / max(preference, location_feature)
 
-    def update_velocity(self, omega, phip, phig, best_swarm_position):
-        random_coefficient_p = np.random.uniform(size=np.asarray(self.position[-1]).shape)
-        random_coefficient_g = np.random.uniform(size=np.asarray(self.position[-1]).shape)
+        elif feature_type == 2:  # Companions
+            return 1 - abs(preference - location_feature) / max(preference, location_feature, 1)
 
-        self.velocity.append(omega
-                             * np.asarray(self.velocity[-1])
-                             + phip
-                             * random_coefficient_p
-                             * (np.asarray(self.best_position[-1])
-                                - np.asarray(self.position[-1]))
-                             + phig
-                             * random_coefficient_g
-                             * (np.asarray(best_swarm_position)
-                                - np.asarray(self.position[-1])))
+        elif feature_type in [3, 4]:  # Accommodation and Transportation
+            return self.categorical_similarity(preference, location_feature)
 
-        self.velocity[-1] = self.velocity[-1].astype(int)
+        return 0
 
-    def update_position(self, lower_bound, upper_bound, objective_function):
-        new_position = self.position[-1] + self.velocity[-1]
+    def categorical_similarity(self, preference, feature):
+        if isinstance(preference, str) and isinstance(feature, str):
+            return 1 if preference.lower() == feature.lower() else 0
+        if isinstance(preference, list) and isinstance(feature, list):
+            return len(set(preference) & set(feature)) / len(set(preference) | set(feature))
+        return 0
 
-        if np.array_equal(self.position[-1], new_position):
-            self.function_value.append(self.function_value[-1])
-        else:
-            mark1 = new_position < lower_bound
-            mark2 = new_position > upper_bound
+    def get_best_location(self, best_position, locations, user_preferences):
+        best_score = float('-inf')
+        best_location = None
+        for location in locations:
+            score = sum(
+                w * self.feature_score(p, f, i, t)
+                for w, p, f, i, t in zip(
+                    best_position,
+                    user_preferences[2:],  # Exclude current lat and lon
+                    location[3:],  # Exclude name, lat, lon
+                    range(3, len(location)),  # Feature indices
+                    range(len(user_preferences[2:]))  # Feature type indicator
+                )
+            )
+            # Add distance score
+            distance = euclidean(user_preferences[:2], location[1:3])
+            distance_score = 1 / (1 + distance / 1000)
+            score += distance_score
+            if score > best_score:
+                best_score = score
+                best_location = location
+        return best_location
 
-            new_position[mark1] = lower_bound[mark1]
-            new_position[mark2] = upper_bound[mark2]
 
-            self.function_value.append(objective_function(self.position[-1]))
+# Example usage
+optimizer = LocationOptimizer(num_particles=30, num_iterations=100, w=0.5, c1=1, c2=2)
 
-        self.position.append(new_position.tolist())
+# Example locations data: [name, lat, lon, budget, duration, companions, accommodation, transportation]
+locations = [
+    ["Meenakshi Amman Temple", 9.9260, 78.1131, (800, 1200), 2, 4, ["hotel", "hostel"], ["walking", "auto-rickshaw"]],
+    ["Thiruparankundram Temple", 9.9075, 78.1269, (500, 800), 1, 3, ["hotel", "hostel"], ["walking", "auto-rickshaw"]],
+    ["Pazhamudhir Solai", 9.9364, 78.1298, (300, 500), 1, 2, ["hotel", "hostel"], ["walking", "auto-rickshaw"]],
+    ["Koodal Azhagar Temple", 9.9229, 78.1195, (500, 800), 1, 3, ["hotel", "hostel"], ["walking", "auto-rickshaw"]],
+    ["Vaigai Dam", 9.8983, 78.1171, (200, 400), 2, 4, ["hotel", "camping"], ["bus", "auto-rickshaw"]]
+]
 
-        if self.function_value[-1] < self.best_function_value[-1]:
-            self.best_position.append(self.position[-1][:])
-            self.best_function_value.append(self.function_value[-1])
+# User preferences: [current_lat, current_lon, budget_range, duration, companions, accommodation_pref, transportation_pref]
+user_preferences = [9.8822, 78.0836, (500, 800), 2, 3, ["hotel"], ["walking", "auto-rickshaw"]]
 
-class Pso(object):
-    def __init__(self, swarmsize=100, maxiter=100):
-        self.max_generations = maxiter
-        self.swarmsize = swarmsize
-
-        self.omega = 0.5
-        self.phip = 0.5
-        self.phig = 0.5
-
-        self.minstep = 1e-4
-        self.minfunc = 1e-4
-
-        self.best_position = None
-        self.best_function_value = float('inf')
-
-        self.particles = []
-        self.retired_particles = []
-
-    def run(self, function, lower_bound, upper_bound, kwargs=None):
-        if kwargs is None:
-            kwargs = {}
-
-        objective_function = lambda x: function(x, **kwargs)
-        assert hasattr(function, '__call__'), 'Invalid function handle'
-        assert len(lower_bound) == len(upper_bound), 'Invalid bounds length'
-
-        lower_bound = np.array(lower_bound)
-        upper_bound = np.array(upper_bound)
-        assert np.all(upper_bound > lower_bound), 'Invalid boundary values'
-
-        dimensions = len(lower_bound)
-        self.particles = self.initialize_particles(lower_bound, upper_bound, dimensions, objective_function)
-
-        generation = 1
-        while generation <= self.max_generations:
-            for particle in self.particles:
-                particle.update_velocity(self.omega, self.phip, self.phig, self.best_position)
-                particle.update_position(lower_bound, upper_bound, objective_function)
-
-                if particle.best_function_value[-1] == 0:
-                    self.retired_particles.append(copy.deepcopy(particle))
-                    particle.reset(dimensions, lower_bound, upper_bound, objective_function)
-                elif particle.best_function_value[-1] < self.best_function_value:
-                    stepsize = np.sqrt(np.sum((np.asarray(self.best_position)
-                                               - np.asarray(particle.position[-1])) ** 2))
-
-                    if np.abs(np.asarray(self.best_function_value)
-                              - np.asarray(particle.best_function_value[-1])) \
-                            <= self.minfunc:
-                        return particle.best_position[-1], particle.best_function_value[-1]
-                    elif stepsize <= self.minstep:
-                        return particle.best_position[-1], particle.best_function_value[-1]
-                    else:
-                        self.best_function_value = particle.best_function_value[-1]
-                        self.best_position = particle.best_position[-1][:]
-
-            generation += 1
-
-        return self.best_position, self.best_function_value
-
-    def initialize_particles(self, lower_bound, upper_bound, dimensions, objective_function):
-        particles = []
-        for _ in range(self.swarmsize):
-            particles.append(Particle(lower_bound, upper_bound, dimensions, objective_function))
-            if particles[-1].best_function_value[-1] < self.best_function_value:
-                self.best_function_value = particles[-1].best_function_value[-1]
-                self.best_position = particles[-1].best_position[-1]
-
-        return particles
+best_location = optimizer.optimize(locations, user_preferences)
+print("Schema of locations data: [name, lat, lon, budget, duration, companions, accommodation, transportation]\n")
+print(f"User Input: {user_preferences}")
+print(f"Best location: {best_location[0]}")
+print(f"Details: {best_location}")
